@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>It's Hockey!</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="css/animate.css">
+	<!-- Icomoon Icon Fonts-->
+	<link rel="stylesheet" href="css/icomoon.css">
+	<!-- Bootstrap  -->
+	<link rel="stylesheet" href="css/bootstrap.css">
+	<!-- Theme style  -->
+	<link rel="stylesheet" href="css/style.css">
+	<!-- Modernizr JS -->
+	<script src="js/modernizr-2.6.2.min.js"></script>
+
+	</head>
+	<body>
+
+	<div class="fh5co-loader"></div>    
+
+	<div id="page">
+		<div class="boxRoute">
+			<nav class="fh5co-nav" role="navigation">
+				<div class="container">
+					<div class="row"  style="text-align: center">
+						<div class="logo center-menu text-center" style="padding-bottom: 30px">
+							<div id="fh5co-logo"><a href="#">It's Hockey!</a></div>
+						</div> 
+					</div>
+				</div>
+			</nav>
+		</div>
+
+        <header id="fh5co-header" class="fh5co-cover" role="banner">
+            <div class="overlay"></div>
+            <div class="container">
+                <div class="row text-center">                
+					<div class="display-t">
+						<div class="display-tc animate-box">
+							<div></div>
+							<span>Hai&nbsp;</span><span id="result"></span><span>&nbsp;la partita!</span> 
+							<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+								<div class="row box-info-user user-data-report">
+									<ul>
+										<li><span class="player-statistic">Statistiche giocatore</span></li>
+										<li class="menu-item">Livello: <span id="level"></span> </li>
+										<li class="menu-item">Esperienza: <span id="exp"></span> <span>(+</span><span id="expGained"></span><span>)</span></li>
+									</ul>
+								</div>
+							</div>
+							<table>
+								<tr>
+									<td>
+										<button type="submit" class="btn btn-default" style="margin-top:2%" name="backToMain">Conferma</button>
+									</td>
+								</tr>
+							</table>							
+						</div>
+					</div>
+                </div>
+            </div>
+        </header>
+	</div>
+
+	<!-- jQuery -->
+	<script src="js/jquery.min.js"></script>
+	<!-- jQuery Easing -->
+	<script src="js/jquery.easing.1.3.js"></script>
+	<!-- Bootstrap -->
+	<script src="js/bootstrap.min.js"></script>
+	<!-- Waypoints -->
+	<script src="js/jquery.waypoints.min.js"></script>
+	<!-- Main -->
+	<script src="js/main.js"></script>
+    <!-- Script io.socket -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.slim.js"></script>
+    <!-- SCRIPT COOKIE -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <!-- Script socket -->
+	<script src="www/js/script.js"></script>
+	
+	<script>
+		initializeFinishGame();
+		document.addEventListener('refreshData', function(data) {
+			if(Object.keys(data.detail)[0] == 'matchReport') {
+				var data = Object.values(data.detail)[0].data;
+				boxInfoUser(data);
+			}
+        }.bind(this));
+
+		function boxInfoUser(data) {
+            document.getElementById('level').innerHTML = data.dataUser.level;
+			document.getElementById('exp').innerHTML = data.dataUser.exp;
+			document.getElementById('result').innerHTML = data.report.status;
+			document.getElementById('expGained').innerHTML = data.report.expGained;
+		}
+
+		$('[name=backToMain]').on('click', function() {
+			backToMain();
+		});
+	</script>
+
+	</body>
+</html>
